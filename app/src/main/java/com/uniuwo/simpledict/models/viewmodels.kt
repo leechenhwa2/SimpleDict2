@@ -4,9 +4,9 @@ import com.uniuwo.simpledict.databus.FavoriteEntry
 import com.uniuwo.simpledict.databus.SimpleDataBus
 
 object WordListViewModel {
-    val items: MutableList<WordEntry> = ArrayList()
+    val items: MutableList<WordHolder> = ArrayList()
 
-    var currentItem: WordEntry? = null
+    var currentItem: WordHolder? = null
 
     val searchWords: MutableList<String> = ArrayList()
 
@@ -20,13 +20,15 @@ object WordListViewModel {
     }
 
     fun findByWord(word: String): List<WordEntry> {
-        val result = SimpleDataBus.findSimpleByWord(word)
-        return result
+        return SimpleDataBus.findSimpleByWord(word)
+    }
+
+    fun findDetailByWord(word: String): List<WordEntry> {
+        return SimpleDataBus.findDetailByWord(word)
     }
 }
 
 object WordFavoriteViewModel {
-    val items: MutableList<WordEntry> = ArrayList()
 
     fun getFavorites(): List<FavoriteEntry> {
         val favorites = SimpleDataBus.getAllFavorite()
