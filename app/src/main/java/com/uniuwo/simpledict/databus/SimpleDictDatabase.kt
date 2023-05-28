@@ -254,4 +254,8 @@ class SimpleDictDatabase(
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
     }
+
+    override fun toString(): String {
+        return if (dbPath.isEmpty()) super.toString() else dbPath
+    }
 }
