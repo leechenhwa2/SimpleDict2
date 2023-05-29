@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uniuwo.simpledict.databinding.FragmentWordFavoriteCardBinding
 import com.uniuwo.simpledict.databus.FavoriteEntry
 import com.uniuwo.simpledict.databus.SimpleDataBus
+import com.uniuwo.simpledict.models.WordHolder
 import com.uniuwo.simpledict.models.WordListViewModel
 
 class FavoriteItemRecyclerViewAdapter(
@@ -22,8 +23,7 @@ class FavoriteItemRecyclerViewAdapter(
         return ViewHolder(
             FragmentWordFavoriteCardBinding.inflate(
                 LayoutInflater.from(parent.context),
-                parent,
-                false
+                parent, false
             )
         )
 
@@ -34,7 +34,7 @@ class FavoriteItemRecyclerViewAdapter(
         holder.idView.text = item.word
         holder.contentView.text = ""
 
-        val dictItems = SimpleDataBus.findSimpleByWord(item.word)
+        val dictItems = WordListViewModel.findByWord(item.word)
         val dictItem = if (dictItems.isNotEmpty()) dictItems[0] else null
         if (dictItem != null) {
             val content = dictItems.map { it.entry.content }.joinToString("; ")
@@ -42,7 +42,7 @@ class FavoriteItemRecyclerViewAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            WordListViewModel.currentItem = dictItem
+            WordListViewModel.currentItem = WordHolder(item.word)
             onItemClickListener?.onClick(it)
         }
 

@@ -19,7 +19,6 @@ import com.uniuwo.simpledict.ui.wordDetail.WordDetailFragment
 class WordFavoriteFragment : Fragment() {
 
     private lateinit var mAdapter: FavoriteItemRecyclerViewAdapter
-    var wordDetailFragment: WordDetailFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +42,8 @@ class WordFavoriteFragment : Fragment() {
 
     private fun showDetailView() {
         if(WordListViewModel.currentItem == null) return
-        Toast.makeText(requireContext(), WordListViewModel.currentItem!!.entry.word, Toast.LENGTH_LONG).show()
-        if(wordDetailFragment == null){
-            wordDetailFragment =  WordDetailFragment()
-        }
-        wordDetailFragment?.show(childFragmentManager, "detail")
+//        Toast.makeText(requireContext(), WordListViewModel.currentItem!!.word, Toast.LENGTH_LONG).show()
+        WordDetailFragment().show(childFragmentManager, "detail")
     }
 
 }

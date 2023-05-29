@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.uniuwo.simpledict.R
 import com.uniuwo.simpledict.databinding.FragmentWordDetailBinding
 import com.uniuwo.simpledict.models.WordEntry
+import com.uniuwo.simpledict.models.WordHolder
 import com.uniuwo.simpledict.models.WordListViewModel
 
 
@@ -75,7 +76,7 @@ class WordDetailFragment : DialogFragment() {
         if(index > 0){
             binding.buttonPrev.isEnabled = true
             val prev = WordListViewModel.items[index - 1]
-            binding.buttonPrev.text = "< ${prev.entry.word}"
+            binding.buttonPrev.text = "< ${prev.word}"
         } else {
             binding.buttonPrev.isEnabled = false
         }
@@ -83,20 +84,38 @@ class WordDetailFragment : DialogFragment() {
         if(index < (WordListViewModel.items.size - 1)) {
             binding.buttonNext.isEnabled = true
             val next = WordListViewModel.items[index + 1]
-            binding.buttonNext.text = "${next.entry.word} >"
+            binding.buttonNext.text = "${next.word} >"
         } else {
             binding.buttonNext.isEnabled = false
         }
 
     }
 
-    private fun loadItemDetail(item: WordEntry?) {
-        if(item == null) return
-        val content = "<article class=\"dict-entry\"><h1>${item.entry.word}</h1> ${item.entry.content}" + "</article>"
+    private fun loadItemDetail(item: WordHolder?) {
+        if (item == null) return
 
-        val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
-                content +
-                "</body></html>"
-        webView.loadData(page, "text/html", "UTF-8")
+        val entries : MutableList<WordEntry> = mutableListOf()
+
+        val simples = WordListViewModel.findByWord(item.word)
+        val details = WordListViewModel.findDetailByWord(item.word)
+        entries.addAll(simples)
+        entries.addAll(details)
+
+        if (entries.isEmpty()) {
+            val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
+                    "<em>未找到定义</em>" +
+                    "</body></html>"
+            webView.loadData(page, "text/html", "UTF-8")
+        } else {
+            val content =
+                entries.map {
+                    "<article class=\"dict-entry\"><h1>${it.entry.word}</h1> ${it.entry.content}" + "</article>"
+                }.joinToString("")
+
+            val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
+                    content +
+                    "</body></html>"
+            webView.loadData(page, "text/html", "UTF-8")
+        }
     }
 }

@@ -106,10 +106,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun initDatabases() {
         requirePermissions(this)
-        SimpleDataBus.initDatabases(applicationContext)
+
+        SimpleDataBus.checkFolders(applicationContext)
+        SimpleDataBus.initWordList(applicationContext)
+        Thread {
+            SimpleDataBus.initDatabases(applicationContext)
+        }.start()
     }
 
     companion object {
