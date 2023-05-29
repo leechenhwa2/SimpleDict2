@@ -7,4 +7,9 @@
         android:title="@string/action_search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_wordlist"
+        android:title="@string/menu_word_list"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="ifRoom" />
 </menu>
