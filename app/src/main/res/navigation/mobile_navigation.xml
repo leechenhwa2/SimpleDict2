@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_word_list">
+
+    <fragment
+        android:id="@+id/nav_word_list"
+        android:name="com.uniuwo.simpledict.ui.wordList.WordListFragment"
+        android:label="@string/menu_word_list"
+        tools:layout="@layout/fragment_word_list" />
+    <fragment
+        android:id="@+id/nav_word_favorite"
+        android:name="com.uniuwo.simpledict.ui.wordFavorite.WordFavoriteFragment"
+        android:label="@string/menu_word_favorite"
+        tools:layout="@layout/fragment_word_favorite_list" />
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.uniuwo.simpledict.ui.help.HelpFragment"
+        android:label="@string/menu_help"
+        tools:layout="@layout/fragment_help" />
+</navigation>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Simple Dict</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_header_title">简单词典</string>
+    <string name="nav_header_subtitle">采用基于SQLite数据库文件的开放词典文件格式</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+
+    <string name="menu_home">Home</string>
+
+    <string name="menu_word_list">Word List</string>
+    <string name="menu_word_favorite">Word Favorite</string>
+    <string name="menu_help">Help</string>
+
+    <string name="favorite">Favorite</string>
+
+    <string name="help">Help</string>
+    <string name="help_content">
+        <![CDATA[
+        <div>本APP没有自带词典，首次运行后将在手机上创建文件夹用于存放词典文件。</div>
+        <h2>文件夹</h2><p>~/Android/data/com.uniuwo.simpledict/files</p>
+        <h3>子文件夹</h3><ul><li>simple : 简明词典，用于索引</li><li>detail : 详解词典</li><li>wordlist : 单词表</li></ul>
+        <hr/>
+        <div>词典为开放SQLite词典格式，扩展名db</div>
+        <div>单词表文本文件， UTF-8编码，一行一个单词，扩展名txt</div>
+        ]]>
+    </string>
+
+</resources>
