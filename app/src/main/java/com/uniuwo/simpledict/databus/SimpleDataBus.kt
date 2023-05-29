@@ -2,6 +2,8 @@ package com.uniuwo.simpledict.databus
 
 import android.content.Context
 import com.uniuwo.simpledict.models.WordEntry
+import com.uniuwo.simpledict.models.WordHolder
+import com.uniuwo.simpledict.models.WordList
 import java.io.File
 import kotlin.random.Random
 import kotlin.random.nextLong
@@ -17,6 +19,8 @@ object SimpleDataBus {
     var simpleDatabases: MutableList<SimpleDictDatabase> = mutableListOf()
     var detailDatabases: MutableList<SimpleDictDatabase> = mutableListOf()
 
+    var wordListRepo: MutableList<WordList> = mutableListOf()
+
     var favoriteDatabase: FavoriteDatabase? = null
 
     var mainDirPath: File? = null
@@ -26,7 +30,7 @@ object SimpleDataBus {
         initFavoriteDatabase(appContext)
     }
 
-    private fun initExternalDatabases(appContext: Context) {
+    fun checkFolders(appContext: Context) {
         //scan external dir of app
         // eg. /storage/emulated/0/Android/data/com.uniuwo.simpledict/files
         val dirs = appContext.getExternalFilesDirs(null)
@@ -45,6 +49,16 @@ object SimpleDataBus {
 
             val wordListFile = File(mainDir, wordListDir)
             checkDir(wordListFile)
+        }
+    }
+
+    private fun initExternalDatabases(appContext: Context) {
+        if (mainDirPath != null) {
+            val simpleFile = File(mainDirPath, simpleDir)
+            checkDir(simpleFile)
+
+            val detailFile = File(mainDirPath, detailDir)
+            checkDir(detailFile)
 
             simpleDatabases.addAll(scanDbs(appContext, simpleFile))
             detailDatabases.addAll(scanDbs(appContext, detailFile))
@@ -103,20 +117,21 @@ object SimpleDataBus {
     }
 
     fun findDetailByWord(word: String): List<WordEntry> {
-        return simpleDatabases.flatMap { db ->
+        return detailDatabases.flatMap { db ->
             db.dictEntryDao.findByWord(word).map { dictEntry -> WordEntry(db, dictEntry) }
         }
     }
 
-    fun randomSimpleWords(count: Int): List<WordEntry> {
-        val result = mutableListOf<WordEntry>()
+    //demo
+    fun randomSimpleWords(count: Int): List<WordHolder> {
+        val result = mutableListOf<WordHolder>()
 
         for (db in simpleDatabases) {
             val size = db.dictEntryDao.count()
 
             if (count > size) {
                 val list = db.dictEntryDao.getAll()
-                    .map { dictEntry -> WordEntry(db, dictEntry) }
+                    .map { dictEntry -> WordHolder(dictEntry.word) }
                 result.addAll(list)
                 continue
             }
@@ -129,7 +144,7 @@ object SimpleDataBus {
                 .sorted()
 
             val list = db.dictEntryDao.findAllByIds(ids.toLongArray())
-                .map { dictEntry -> WordEntry(db, dictEntry) }
+                .map { dictEntry -> WordHolder(dictEntry.word) }
             result.addAll(list)
         }
 
@@ -159,5 +174,36 @@ object SimpleDataBus {
 
     fun getAllFavorite(): List<FavoriteEntry>? {
         return favoriteDatabase?.favoriteEntryDao?.getAll()
+    }
+
+    fun initWordList(appContext: Context) {
+        if(mainDirPath == null || !mainDirPath!!.exists()) return
+
+        val dir = File(mainDirPath, wordListDir)
+        if(!dir.exists() || !dir.isDirectory) return
+
+        val files = dir.listFiles { _, name -> name.lowercase().endsWith(".txt") }
+        wordListRepo = files.map { file ->
+            readWordListFile(file)
+        }.toMutableList()
+    }
+
+    private fun readWordListFile(file: File): WordList {
+        var lines = file.readLines().toMutableList()
+        var title: String = file.nameWithoutExtension
+
+        if (lines.size > 1) {
+            val titleLine = lines.first().trim()
+            if (titleLine.startsWith("#")) {
+                title = titleLine.substring(1).trim()
+                lines.removeFirst()
+            }
+
+            for (i in 0 until lines.size) {
+                lines[i] = lines[i].trim()
+            }
+        }
+
+        return WordList(file, lines, title)
     }
 }
