@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">简单词典</string>
+    <string name="action_settings">设置</string>
+    <string name="action_search">搜索</string>
+    <string name="menu_home">主页</string>
+    <string name="menu_word_list">单词表</string>
+    <string name="menu_word_favorite">收藏夹</string>
+    <string name="menu_help">帮助</string>
+    <string name="favorite">收藏</string>
+    <string name="help">帮助</string>
+</resources>
