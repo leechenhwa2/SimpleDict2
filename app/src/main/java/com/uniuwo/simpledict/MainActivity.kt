@@ -2,13 +2,11 @@ package com.uniuwo.simpledict
 
 import android.Manifest
 import android.app.Activity
-import android.app.SearchManager
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,6 +33,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Note: assure wordListRepo is populated first
+        requirePermissions(this)
+        initDatabases()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -59,8 +61,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        requirePermissions(this)
-        initDatabases()
+        //Note: assure wordListRepo is populated before fragments, here is late
+//        requirePermissions(this)
+//        initDatabases()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -107,6 +110,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initDatabases() {
+        Log.d(TAG, "Call --- initDatabases")
         requirePermissions(this)
 
         SimpleDataBus.checkFolders(applicationContext)
@@ -117,6 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val TAG = "Main"
         private const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: Int = 1
     }
 }
