@@ -4,15 +4,16 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.database.Cursor
-import android.database.DataSetObserver
 import android.database.MatrixCursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.BaseColumns
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -21,17 +22,12 @@ import android.widget.ArrayAdapter
 import android.widget.CursorAdapter
 import android.widget.SearchView
 import android.widget.SimpleCursorAdapter
-import android.widget.Spinner
-import android.widget.SpinnerAdapter
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uniuwo.simpledict.R
 import com.uniuwo.simpledict.databus.SimpleDataBus
-import com.uniuwo.simpledict.models.WordEntry
 import com.uniuwo.simpledict.models.WordHolder
 import com.uniuwo.simpledict.models.WordList
 import com.uniuwo.simpledict.models.WordListViewModel
@@ -44,6 +40,9 @@ import com.uniuwo.simpledict.utils.Toastx
 class WordListFragment : Fragment() {
 
     private lateinit var mAdapter: WordItemRecyclerViewAdapter
+
+    private lateinit var wordListAdapter: ArrayAdapter<WordList>
+    private lateinit var onWordListItemClickListener: AdapterView.OnItemClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +77,26 @@ class WordListFragment : Fragment() {
 
         if (savedInstanceState == null) {
 //            loadRandomItems()
+            initWordListSheet()
         }
+    }
+
+    private fun initWordListSheet() {
+        //Note: assure wordListRepo is populated first
+        Log.d(TAG, "Call ---- initWordListSheet")
+        wordListAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            SimpleDataBus.wordListRepo
+        )
+
+        onWordListItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                val wordList = wordListAdapter.getItem(position) as WordList
+                Thread {
+                    updateItems(wordList.items.map { WordHolder(it) })
+                }.start()
+            }
     }
 
     private fun loadRandomItems() {
@@ -109,7 +127,6 @@ class WordListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search, menu)
         initSearchAction(menu)
-        initWordListAction(menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -194,36 +211,17 @@ class WordListFragment : Fragment() {
         }
     }
 
-    private fun initWordListAction(menu: Menu) {
-        val wordListAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item,
-            SimpleDataBus.wordListRepo
-        ).apply {
-            setDropDownViewResource(R.layout.spinner_dropdown_item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_wordlist) {
+//            Dialogx.show(requireContext(), "ShowMe!")
+            val dialog = WordListSheetDialogFragment(
+                adapter = wordListAdapter,
+                onItemClickListener = onWordListItemClickListener
+            )
+            dialog.show(childFragmentManager, WordListSheetDialogFragment.TAG)
+            return true
         }
-
-        (menu.findItem(R.id.action_wordlist).actionView as Spinner).apply {
-            adapter = wordListAdapter
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    val wordList = wordListAdapter.getItem(position) as WordList
-                    Thread {
-                        updateItems(wordList.items.map { WordHolder(it) })
-                    }.start()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                }
-
-            }
-        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun updateItems(entries: List<WordHolder>) {
@@ -243,6 +241,10 @@ class WordListFragment : Fragment() {
         val inputMethodManager =
             requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    companion object {
+        private const val TAG = "WordListFragment"
     }
 
 }

@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_wordlist"
+        android:icon="@drawable/ic_menu_word_list"
         android:title="@string/menu_word_list"
-        app:actionViewClass="android.widget.Spinner"
         app:showAsAction="ifRoom" />
 </menu>
