@@ -11,7 +11,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.uniuwo.simpledict.R
-import com.uniuwo.simpledict.models.WordList
+import com.uniuwo.simpledcit.core.models.WordList
 
 class WordListSheetDialogFragment(
     val adapter: ArrayAdapter<WordList>,

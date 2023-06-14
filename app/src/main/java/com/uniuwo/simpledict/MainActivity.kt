@@ -19,7 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.uniuwo.simpledict.databinding.ActivityMainBinding
-import com.uniuwo.simpledict.databus.SimpleDataBus
+import com.uniuwo.simpledcit.core.databus.SimpleDataBus
 import com.uniuwo.simpledict.utils.Toastx
 
 

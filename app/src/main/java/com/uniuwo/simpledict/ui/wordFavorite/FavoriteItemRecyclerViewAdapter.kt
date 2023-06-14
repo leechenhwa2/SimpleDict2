@@ -1,17 +1,16 @@
 package com.uniuwo.simpledict.ui.wordFavorite
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.uniuwo.simpledcit.core.databus.FavoriteEntry
+import com.uniuwo.simpledcit.core.databus.SimpleDataBus
+import com.uniuwo.simpledcit.core.models.WordHolder
+import com.uniuwo.simpledcit.core.models.WordListViewModel
 import com.uniuwo.simpledict.databinding.FragmentWordFavoriteCardBinding
-import com.uniuwo.simpledict.databus.FavoriteEntry
-import com.uniuwo.simpledict.databus.SimpleDataBus
-import com.uniuwo.simpledict.models.WordHolder
-import com.uniuwo.simpledict.models.WordListViewModel
 
 class FavoriteItemRecyclerViewAdapter(
     private val values: List<FavoriteEntry>,

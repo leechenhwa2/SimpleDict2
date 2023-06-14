@@ -9,9 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.uniuwo.simpledict.databinding.FragmentWordListCardBinding
-import com.uniuwo.simpledict.databus.SimpleDataBus
-import com.uniuwo.simpledict.models.WordHolder
-import com.uniuwo.simpledict.models.WordListViewModel
+import com.uniuwo.simpledcit.core.databus.SimpleDataBus
+import com.uniuwo.simpledcit.core.models.WordHolder
+import com.uniuwo.simpledcit.core.models.WordListViewModel
 
 
 class WordItemRecyclerViewAdapter(

@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.uniuwo.simpledcit.core.models.WordFavoriteViewModel
+import com.uniuwo.simpledcit.core.models.WordListViewModel
 import com.uniuwo.simpledict.R
-import com.uniuwo.simpledict.models.WordFavoriteViewModel
-import com.uniuwo.simpledict.models.WordListViewModel
 import com.uniuwo.simpledict.ui.wordDetail.WordDetailFragment
 
 /**

@@ -27,10 +27,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uniuwo.simpledict.R
-import com.uniuwo.simpledict.databus.SimpleDataBus
-import com.uniuwo.simpledict.models.WordHolder
-import com.uniuwo.simpledict.models.WordList
-import com.uniuwo.simpledict.models.WordListViewModel
+import com.uniuwo.simpledcit.core.databus.SimpleDataBus
+import com.uniuwo.simpledcit.core.models.WordHolder
+import com.uniuwo.simpledcit.core.models.WordList
+import com.uniuwo.simpledcit.core.models.WordListViewModel
 import com.uniuwo.simpledict.ui.wordDetail.WordDetailFragment
 import com.uniuwo.simpledict.utils.Toastx
 
@@ -63,12 +63,12 @@ class WordListFragment : Fragment() {
             WordListViewModel.items,
             onItemClickListener = { showDetailView() })
 
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-                adapter = mAdapter
-            }
+        val recyclerView: RecyclerView = view.findViewById(R.id.list)
+        with(recyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = mAdapter
         }
+
         return view
     }
 
