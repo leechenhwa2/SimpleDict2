@@ -9,9 +9,9 @@ import android.webkit.WebView
 import androidx.fragment.app.DialogFragment
 import com.uniuwo.simpledict.R
 import com.uniuwo.simpledict.databinding.FragmentWordDetailBinding
-import com.uniuwo.simpledict.models.WordEntry
-import com.uniuwo.simpledict.models.WordHolder
-import com.uniuwo.simpledict.models.WordListViewModel
+import com.uniuwo.simpledcit.core.models.WordEntry
+import com.uniuwo.simpledcit.core.models.WordHolder
+import com.uniuwo.simpledcit.core.models.WordListViewModel
 
 
 class WordDetailFragment : DialogFragment() {
@@ -94,26 +94,29 @@ class WordDetailFragment : DialogFragment() {
     private fun loadItemDetail(item: WordHolder?) {
         if (item == null) return
 
-        val entries : MutableList<WordEntry> = mutableListOf()
-
         val simples = WordListViewModel.findByWord(item.word)
         val details = WordListViewModel.findDetailByWord(item.word)
-        entries.addAll(simples)
-        entries.addAll(details)
 
-        if (entries.isEmpty()) {
+        if (simples.isEmpty() && details.isEmpty()) {
             val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
                     "<em>未找到定义</em>" +
                     "</body></html>"
             webView.loadData(page, "text/html", "UTF-8")
         } else {
-            val content =
-                entries.map {
-                    "<article class=\"dict-entry\"><h1>${it.entry.word}</h1> ${it.entry.content}" + "</article>"
+            val contentSimple =
+                simples.map {
+                    "<article class=\"dict-entry\"><h2>${it.entry.word}</h2> ${it.entry.content}" + "</article>"
+                }.joinToString("")
+            val contentDetail =
+                details.map {
+                    "<article class=\"dict-entry\"><h2>${it.entry.word}</h2> ${it.entry.content}" + "</article>"
                 }.joinToString("")
 
             val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
-                    content +
+                    "<h1>${item.word}</h1><hr/>" +
+                    contentSimple +
+                    "<hr/>" +
+                    contentDetail +
                     "</body></html>"
             webView.loadData(page, "text/html", "UTF-8")
         }
