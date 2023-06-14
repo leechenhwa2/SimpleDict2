@@ -1,17 +1,15 @@
 package com.uniuwo.simpledict.ui.wordDetail
 
-import android.content.ContentResolver.MimeTypeInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.fragment.app.DialogFragment
-import com.uniuwo.simpledict.R
-import com.uniuwo.simpledict.databinding.FragmentWordDetailBinding
-import com.uniuwo.simpledcit.core.models.WordEntry
 import com.uniuwo.simpledcit.core.models.WordHolder
 import com.uniuwo.simpledcit.core.models.WordListViewModel
+import com.uniuwo.simpledict.R
+import com.uniuwo.simpledict.databinding.FragmentWordDetailBinding
 
 
 class WordDetailFragment : DialogFragment() {
@@ -99,17 +97,18 @@ class WordDetailFragment : DialogFragment() {
 
         if (simples.isEmpty() && details.isEmpty()) {
             val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
+                    "<h1>${item.word}</h1><hr/>" +
                     "<em>未找到定义</em>" +
                     "</body></html>"
             webView.loadData(page, "text/html", "UTF-8")
         } else {
             val contentSimple =
                 simples.map {
-                    "<article class=\"dict-entry\"><h2>${it.entry.word}</h2> ${it.entry.content}" + "</article>"
+                    "<article class=\"dict-entry\">${it.entry.content}" + "</article>"
                 }.joinToString("")
             val contentDetail =
                 details.map {
-                    "<article class=\"dict-entry\"><h2>${it.entry.word}</h2> ${it.entry.content}" + "</article>"
+                    "<article class=\"dict-entry\">${it.entry.content}" + "</article>"
                 }.joinToString("")
 
             val page = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" +
