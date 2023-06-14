@@ -1,4 +1,4 @@
-package com.uniuwo.simpledict.databus
+package com.uniuwo.simpledcit.core.databus
 
 import android.content.ContentValues
 import android.content.Context

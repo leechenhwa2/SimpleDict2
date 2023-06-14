@@ -1,7 +1,7 @@
-package com.uniuwo.simpledict.models
+package com.uniuwo.simpledcit.core.models
 
-import com.uniuwo.simpledict.databus.FavoriteEntry
-import com.uniuwo.simpledict.databus.SimpleDataBus
+import com.uniuwo.simpledcit.core.databus.FavoriteEntry
+import com.uniuwo.simpledcit.core.databus.SimpleDataBus
 
 object WordListViewModel {
     val items: MutableList<WordHolder> = ArrayList()

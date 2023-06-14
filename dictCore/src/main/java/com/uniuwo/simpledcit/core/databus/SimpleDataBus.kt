@@ -1,9 +1,9 @@
-package com.uniuwo.simpledict.databus
+package com.uniuwo.simpledcit.core.databus
 
 import android.content.Context
-import com.uniuwo.simpledict.models.WordEntry
-import com.uniuwo.simpledict.models.WordHolder
-import com.uniuwo.simpledict.models.WordList
+import com.uniuwo.simpledcit.core.models.WordEntry
+import com.uniuwo.simpledcit.core.models.WordHolder
+import com.uniuwo.simpledcit.core.models.WordList
 import java.io.File
 import kotlin.random.Random
 import kotlin.random.nextLong

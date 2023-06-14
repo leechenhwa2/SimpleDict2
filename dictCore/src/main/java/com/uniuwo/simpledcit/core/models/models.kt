@@ -1,7 +1,7 @@
-package com.uniuwo.simpledict.models
+package com.uniuwo.simpledcit.core.models
 
-import com.uniuwo.simpledict.databus.DictEntry
-import com.uniuwo.simpledict.databus.SimpleDictDatabase
+import com.uniuwo.simpledcit.core.databus.DictEntry
+import com.uniuwo.simpledcit.core.databus.SimpleDictDatabase
 import java.io.File
 
 class WordEntry {
