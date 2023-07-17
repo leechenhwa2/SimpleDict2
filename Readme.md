@@ -29,7 +29,7 @@ SQLite数据库文件有许多图形化编辑工具，例如DBeaver就是一个�
 其余各行每行一个单词。   
 
 
-## 词典在手机上的位置
+## 词典在手机上的位置 - app
 词典位于
 /storage/emulated/0/Android/data/com.uniuwo.simpledict/files   
 
@@ -40,4 +40,21 @@ SQLite数据库文件有许多图形化编辑工具，例如DBeaver就是一个�
 
 然后连接电脑，将词典文件分别复制到相应文件夹。
 再次启动App就可以搜索词典了。   
+
+## 词典在手机上的位置 - app2
+词典位于
+/storage/emulated/0/Android/data/com.uniuwo.simpledict.app2/files   
+
+## app2 - JetPack Compose Material3 改编
+截图：   
+![Word List Screen](screenshots/Screenshot_app2_wordlist.png)   
+
+![Favorites Screen](screenshots/Screenshot_app2_favorites.png)   
+
+
+## 示范词典数据
+链接：https://pan.baidu.com/s/1O1wLqd5KbLKk1T4MquUAtw?pwd=1234 
+提取码：1234
+
+[SPA (百度网盘)](https://pan.baidu.com/s/1O1wLqd5KbLKk1T4MquUAtw?pwd=1234)
 
